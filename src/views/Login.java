@@ -70,11 +70,13 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TSR POS - LOGIN");
-        setMinimumSize(new java.awt.Dimension(880, 500));
+        setMaximumSize(new java.awt.Dimension(930, 500));
+        setMinimumSize(new java.awt.Dimension(930, 500));
 
         body.setBackground(new java.awt.Color(64, 64, 122));
-        body.setMaximumSize(new java.awt.Dimension(880, 500));
-        body.setMinimumSize(new java.awt.Dimension(880, 500));
+        body.setMaximumSize(new java.awt.Dimension(930, 500));
+        body.setMinimumSize(new java.awt.Dimension(930, 500));
+        body.setPreferredSize(new java.awt.Dimension(930, 500));
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         loginPanel.setBackground(new java.awt.Color(64, 64, 122));
@@ -107,7 +109,7 @@ public class Login extends javax.swing.JFrame {
         login.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         login.setForeground(new java.awt.Color(64, 64, 122));
         login.setText("TSR - LOGIN");
-        cardLogin.add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, -1, -1));
+        cardLogin.add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 15, -1, -1));
 
         jSeparator2.setBackground(new java.awt.Color(64, 64, 122));
         jSeparator2.setForeground(new java.awt.Color(64, 64, 122));
@@ -125,7 +127,7 @@ public class Login extends javax.swing.JFrame {
         labelIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/icon/userblack.png"))); // NOI18N
         cardLogin.add(labelIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, 30));
 
-        txtuser.setFont(new java.awt.Font("Calibri", 2, 12)); // NOI18N
+        txtuser.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         txtuser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtuserActionPerformed(evt);
@@ -218,7 +220,7 @@ public class Login extends javax.swing.JFrame {
 
         loginPanel.add(cardLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, -1));
 
-        body.add(loginPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 800, 440));
+        body.add(loginPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 32, 800, 440));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

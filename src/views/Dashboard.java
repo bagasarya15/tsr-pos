@@ -59,26 +59,27 @@ public Dashboard() {
         //Component Menu Produk
         tampilDataProduk(); nullTableProduk(); autoKodeProduk();
         
-        //Component Menu Kelola Akun
-        tampilDataUsers(); nullTableUsers();
-        
         //Component Menu Supplier
         tampilDataSupplier(); nullTableSupplier(); autoKodeSupplier();
-        
-        //Component Menu Customer
-        tampilDataCustomer(); nullTableCustomer(); autoKodeCustomer();
         
         //Component Menu Transaksi Penjualan
         tampilDataTransaksi(); autoKodeTransaksi(); nullTableKeranjang(); 
         tampilInputTransaksi(); cbCustomer(); dateTransaksi(); nullTransaksi(); totalBiaya();
         
         //Component Menu Pengeluaran 
-        tampilDataPengeluaran();  nullTablePengeluaran();
+        tampilDataPengeluaran();  nullTablePengeluaran(); autoKodePengeluaran();
+        
+        //Component Menu Customer
+        tampilDataCustomer(); nullTableCustomer(); autoKodeCustomer();
         
         //Component Menu Laporan Penjualan
         tampilDataPenjualan();
+        
+        //Component Menu Kelola Akun
+        tampilDataUsers(); nullTableUsers(); autoKodeUser();
     }
 //** All Function    
+
     //Function Menu Dashboard    
     private void searchByDate() {
         String bulan = String.valueOf(JcBulan.getSelectedItem());
@@ -270,51 +271,26 @@ public Dashboard() {
            JOptionPane.showMessageDialog(null, "Koneksi Database Gagal" + e.getMessage());
         } 
     }
-    // End Menu Produk  
     
-    // Function Menu Kelola Akun
-    private void nullTableUsers() {
-        txtidUser.setEditable(true);
-        txtidUser.setText(null);
-        txtusername.setText(null);
-        txtpassword.setText(null);
-        txtnama.setText(null);
-        cbUsersKelola.setSelectedItem(this);
-    }
-    
-    private void tampilDataUsers() {
-        DefaultTableModel tblUsers = new DefaultTableModel();
-        tblUsers.addColumn("No");
-        tblUsers.addColumn("ID User");
-        tblUsers.addColumn("Username");
-        tblUsers.addColumn("Password");
-        tblUsers.addColumn("Nama");
-        tblUsers.addColumn("Level Akses");
-        
-        String cariUsers = txtcariUsers.getText();
+    private void cetakDataProduk(){
+        File reportFile = new File(".");
+        String dirr = "";
         try {
-            int no = 1;
-            String sql = "SELECT * FROM users WHERE username LIKE'%"+cariUsers+"%'";
+            String sql = "SELECT * FROM produk";        
             Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stm = conn.createStatement();
-            ResultSet rs  = stm.executeQuery(sql);
-            
-            while(rs.next()) {
-                tblUsers.addRow(new Object[]{
-                    no++,
-                    rs.getString(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4),
-                    rs.getString(5)
-                });
-            }
-            tabelKelolaAkun.setModel(tblUsers);
-        }catch (SQLException e){
-           JOptionPane.showMessageDialog(null, "Koneksi Database Gagal" + e.getMessage());
-        } 
+            Statement stmt = conn.createStatement();
+            dirr = reportFile.getCanonicalPath()+ "/src/reports/";
+            JasperDesign design = JRXmlLoader.load(dirr + "reportProduk.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport(design);
+            ResultSet rs = stmt.executeQuery(sql);
+            JRResultSetDataSource rsDataSource = new JRResultSetDataSource(rs);
+            JasperPrint JPrint = JasperFillManager.fillReport(jr, new HashMap(), rsDataSource);
+            JasperViewer.viewReport(JPrint, false);
+        } catch (SQLException | IOException | JRException ex) {
+            JOptionPane.showMessageDialog(null, "Gagal Cetak Data Produk" + ex);
+        }
     }
-    //End Menu Kelola Akun
+    // End Menu Produk  
     
     //Function Menu Supplier
     private void autoKodeSupplier() {
@@ -385,73 +361,7 @@ public Dashboard() {
     } 
     //End Menu Supplier
     
-    //Function Menu Customer
-    private void autoKodeCustomer() {
-        try{   
-            String sql = "SELECT MAX(right(kode_customer, 2))  AS kode_customer FROM customer";        
-            Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
-            ResultSet rs  = stmt.executeQuery(sql);
-            while(rs.next()){
-                if(rs.first()==false){
-                    txtKodeCustomer.setText("CST-001");
-                }else{
-                    rs.last();
-                    int customerKode = rs.getInt(1) + 1;
-                    String nomor = String.valueOf(customerKode);
-                    int noCus = nomor.length();
-                    
-                    for(int i=0; i<3-noCus; i++){
-                        nomor = "0" + nomor;
-                    }
-                    txtKodeCustomer.setText("CST-" + nomor);
-                }
-            }
-        } catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-    
-    private void nullTableCustomer() {
-        txtNamaCustomer.setEditable(true);
-        txtNamaCustomer.setText(null);
-        txtAlamatCustomer.setText(null);
-        txtTlpCustomer.setText(null);
-    }
-    
-    private void tampilDataCustomer() {
-        DefaultTableModel tblCustomer = new DefaultTableModel();
-        tblCustomer.addColumn("No");
-        tblCustomer.addColumn("Kode Customer");
-        tblCustomer.addColumn("Nama Customer");
-        tblCustomer.addColumn("Alamat");
-        tblCustomer.addColumn("No Tlp");
-        
-        String cariCustomer = txtcariCustomer.getText();
-        try {
-            int no = 1;
-            String sql = "SELECT * FROM customer WHERE nama_customer LIKE'%"+cariCustomer+"%'";
-            Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stm = conn.createStatement();
-            ResultSet rs  = stm.executeQuery(sql);
-            
-            while(rs.next()) {
-                tblCustomer.addRow(new Object[]{
-                    no++,
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4),
-                    rs.getString(5)
-                });
-            }
-            tabelCustomer.setModel(tblCustomer);
-        }catch (SQLException e){
-           JOptionPane.showMessageDialog(null, "Koneksi Database Gagal" + e.getMessage());
-        } 
-    } 
-    //End Menu Customer
-    
-    //Function Menu Transaksi Penjualan
+     //Function Menu Transaksi Penjualan
     private void dateTransaksi() {
         Date ys = new Date();
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
@@ -500,6 +410,7 @@ public Dashboard() {
         txtKembalian.setText(null);
         cbCustomer.setSelectedItem("Pembeli Umum");
     }
+    
     //Perhitungan Transaksi
     private void totalBiaya() {
         int jumlahBaris = tabelInputTransaksi.getRowCount();
@@ -606,6 +517,46 @@ public Dashboard() {
         }
     }
     
+     private void functionAddNota() {
+       DefaultTableModel model = (DefaultTableModel) tabelInputTransaksi.getModel();
+       Statement st;    
+       int total, bayar;
+       total = Integer.valueOf(txtTotalBayar.getText());
+       bayar = Integer.valueOf(txtBayar.getText());
+        
+        try {
+           Connection conn = (Connection)Koneksi.getKoneksi();
+           st = conn.createStatement();
+            if(total > bayar) {
+                JOptionPane.showMessageDialog(null, "Uang Tidak Cukup Untuk Melakukan Pembayaran !");
+            } else {
+               for (int i=0; i < model.getRowCount(); i++){
+               String kodeBarang = model.getValueAt(i,1).toString();
+               String namaBarang = model.getValueAt(i,2).toString();
+               String hargaBarang = model.getValueAt(i,3).toString();
+               String qtyBarang = model.getValueAt(i,4).toString();
+               String totalHarga = model.getValueAt(i,6).toString();
+               
+               String sqlQuery = "INSERT INTO `transaksi_detail` "
+                       + "(`id_detail`,`no_transaksi`, `nama_customer` , `kode_barang`, `nama_barang`, `jumlah`, "
+                       + "`harga_jual`, `total`, `total_bayar`, `kembalian`, `tgl_transaksi`)"
+                       + " VALUES (default,'"+transaksiKode.getText()+"', '"+cbCustomer.getSelectedItem()+"', "
+                       + "'"+kodeBarang+"','"+namaBarang+"','"+qtyBarang+"','"+hargaBarang+"','"+totalHarga+"', "
+                       + "'"+txtBayar.getText()+"', '"+txtKembalian.getText()+"', '"+txtTgl.getText()+"')";
+               st.addBatch(sqlQuery);
+            } 
+                int [] rowsInserted = st.executeBatch();
+                JOptionPane.showMessageDialog(null, "Barang Berhasil Dibayar !");
+                JOptionPane.showMessageDialog(null, "Tunggu Proses Cetak Struk !");
+                strukTransaksi();
+           }           
+        }catch(SQLException e) {
+           JOptionPane.showMessageDialog(null, "Tambah Pembayaran Error !" + e.getMessage());
+        }
+        tampilDataPenjualan(); dashboardNewTransaksi(); 
+        dateTransaksi(); countData(); nullTransaksi();
+    }
+     
     private void strukTransaksi() {
         File reportFile = new File(".");
         String dirr = "";
@@ -691,6 +642,31 @@ public Dashboard() {
     //End Menu Transaksi Penjualan
     
     //Menu Pengeluaran
+    private void autoKodePengeluaran() {
+        try{   
+            String sql = "SELECT MAX(right(id_pengeluaran, 4))  AS id_pengeluaran FROM pengeluaran";        
+            Connection conn = (Connection)Koneksi.getKoneksi();
+            Statement stmt = conn.createStatement();
+            ResultSet rs  = stmt.executeQuery(sql);
+            while(rs.next()){
+                if(rs.first()==false){
+                    txtIdPengeluaran.setText("EXPNS-0001");
+                }else{
+                    rs.last();
+                    int autoId = rs.getInt(1) + 1;
+                    String nomor = String.valueOf(autoId);
+                    int noPengeluaran = nomor.length();
+                    
+                    for(int i=0; i<4-noPengeluaran; i++){
+                        nomor = "0" + nomor;
+                    }
+                    txtIdPengeluaran.setText("EXPNS-" + nomor);
+                }
+            }
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
     private static Date getTanggalPengeluaran(JTable table, int kolom) {
         JTable tabel = table;
         String str_tgl = String.valueOf(tabel.getValueAt(tabel.getSelectedRow(), kolom));
@@ -747,6 +723,72 @@ public Dashboard() {
     }
     //End Menu Pengeluaran
     
+    //Function Menu Customer
+    private void autoKodeCustomer() {
+        try{   
+            String sql = "SELECT MAX(right(kode_customer, 2))  AS kode_customer FROM customer";        
+            Connection conn = (Connection)Koneksi.getKoneksi();
+            Statement stmt = conn.createStatement();
+            ResultSet rs  = stmt.executeQuery(sql);
+            while(rs.next()){
+                if(rs.first()==false){
+                    txtKodeCustomer.setText("CST-001");
+                }else{
+                    rs.last();
+                    int customerKode = rs.getInt(1) + 1;
+                    String nomor = String.valueOf(customerKode);
+                    int noCus = nomor.length();
+                    
+                    for(int i=0; i<3-noCus; i++){
+                        nomor = "0" + nomor;
+                    }
+                    txtKodeCustomer.setText("CST-" + nomor);
+                }
+            }
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    private void nullTableCustomer() {
+        txtNamaCustomer.setEditable(true);
+        txtNamaCustomer.setText(null);
+        txtAlamatCustomer.setText(null);
+        txtTlpCustomer.setText(null);
+    }
+    
+    private void tampilDataCustomer() {
+        DefaultTableModel tblCustomer = new DefaultTableModel();
+        tblCustomer.addColumn("No");
+        tblCustomer.addColumn("Kode Customer");
+        tblCustomer.addColumn("Nama Customer");
+        tblCustomer.addColumn("Alamat");
+        tblCustomer.addColumn("No Tlp");
+        
+        String cariCustomer = txtcariCustomer.getText();
+        try {
+            int no = 1;
+            String sql = "SELECT * FROM customer WHERE nama_customer LIKE'%"+cariCustomer+"%'";
+            Connection conn = (Connection)Koneksi.getKoneksi();
+            Statement stm = conn.createStatement();
+            ResultSet rs  = stm.executeQuery(sql);
+            
+            while(rs.next()) {
+                tblCustomer.addRow(new Object[]{
+                    no++,
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5)
+                });
+            }
+            tabelCustomer.setModel(tblCustomer);
+        }catch (SQLException e){
+           JOptionPane.showMessageDialog(null, "Koneksi Database Gagal" + e.getMessage());
+        } 
+    } 
+    //End Menu Customer
+    
     //Menu Laporan Penjualan
     private void tampilDataPenjualan() {
     DefaultTableModel tblPenjualan = new DefaultTableModel();
@@ -793,6 +835,76 @@ public Dashboard() {
         } 
     }
     //End Menu Laporan Penjualan
+    
+    // Function Menu Kelola Akun
+    private void autoKodeUser() {
+        try{   
+            String sql = "SELECT MAX(right(id_user, 4))  AS id_user FROM users";        
+            Connection conn = (Connection)Koneksi.getKoneksi();
+            Statement stmt = conn.createStatement();
+            ResultSet rs  = stmt.executeQuery(sql);
+            while(rs.next()){
+                if(rs.first()==false){
+                    txtidUser.setText("USR-0001");
+                }else{
+                    rs.last();
+                    int autoId = rs.getInt(1) + 1;
+                    String nomor = String.valueOf(autoId);
+                    int noUser = nomor.length();
+                    
+                    for(int i=0; i<4-noUser; i++){
+                        nomor = "0" + nomor;
+                    }
+                    txtidUser.setText("USR-" + nomor);
+                }
+            }
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    private void nullTableUsers() {
+        txtidUser.setEditable(true);
+        txtidUser.setText(null);
+        txtusername.setText(null);
+        txtpassword.setText(null);
+        txtnama.setText(null);
+        cbUsersKelola.setSelectedItem(this);
+    }
+    
+    private void tampilDataUsers() {
+        DefaultTableModel tblUsers = new DefaultTableModel();
+        tblUsers.addColumn("No");
+        tblUsers.addColumn("ID User");
+        tblUsers.addColumn("Username");
+        tblUsers.addColumn("Password");
+        tblUsers.addColumn("Nama");
+        tblUsers.addColumn("Level Akses");
+        
+        String cariUsers = txtcariUsers.getText();
+        try {
+            int no = 1;
+            String sql = "SELECT * FROM users WHERE username LIKE'%"+cariUsers+"%'";
+            Connection conn = (Connection)Koneksi.getKoneksi();
+            Statement stm = conn.createStatement();
+            ResultSet rs  = stm.executeQuery(sql);
+            
+            while(rs.next()) {
+                tblUsers.addRow(new Object[]{
+                    no++,
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5)
+                });
+            }
+            tabelKelolaAkun.setModel(tblUsers);
+        }catch (SQLException e){
+           JOptionPane.showMessageDialog(null, "Koneksi Database Gagal" + e.getMessage());
+        } 
+    }
+    //End Menu Kelola Akun
 //* End All Function    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -876,6 +988,9 @@ public Dashboard() {
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         panelDateDashboard = new javax.swing.JPanel();
+        JcTahun = new com.toedter.calendar.JYearChooser();
+        JcBulan = new javax.swing.JComboBox<>();
+        btnSearchByDate = new javax.swing.JButton();
         cardPengeluaran = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
@@ -1080,7 +1195,7 @@ public Dashboard() {
 
         labelUtama.setBackground(new java.awt.Color(255, 255, 255));
         labelUtama.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        labelUtama.setForeground(new java.awt.Color(161, 161, 194));
+        labelUtama.setForeground(new java.awt.Color(255, 255, 255));
         labelUtama.setText("Menu Utama");
         labelUtama.setToolTipText("");
         sidebar.add(labelUtama, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 80, -1));
@@ -1105,7 +1220,7 @@ public Dashboard() {
 
         PengaturanLabel.setBackground(new java.awt.Color(255, 255, 255));
         PengaturanLabel.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        PengaturanLabel.setForeground(new java.awt.Color(161, 161, 194));
+        PengaturanLabel.setForeground(new java.awt.Color(255, 255, 255));
         PengaturanLabel.setText("Pengaturan");
         PengaturanLabel.setToolTipText("");
         sidebar.add(PengaturanLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 80, -1));
@@ -1155,7 +1270,7 @@ public Dashboard() {
 
         PengaturanLabel1.setBackground(new java.awt.Color(255, 255, 255));
         PengaturanLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        PengaturanLabel1.setForeground(new java.awt.Color(161, 161, 194));
+        PengaturanLabel1.setForeground(new java.awt.Color(255, 255, 255));
         PengaturanLabel1.setText("Laporan");
         PengaturanLabel1.setToolTipText("");
         sidebar.add(PengaturanLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 80, -1));
@@ -1222,7 +1337,7 @@ public Dashboard() {
 
         labelUtama1.setBackground(new java.awt.Color(255, 255, 255));
         labelUtama1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        labelUtama1.setForeground(new java.awt.Color(161, 161, 194));
+        labelUtama1.setForeground(new java.awt.Color(255, 255, 255));
         labelUtama1.setText("Overview");
         labelUtama1.setToolTipText("");
         sidebar.add(labelUtama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 80, -1));
@@ -1354,9 +1469,9 @@ public Dashboard() {
         container.add(footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 770, 50));
         footer.getAccessibleContext().setAccessibleParent(body);
 
+        mainPanel.setBackground(new java.awt.Color(222, 222, 229));
         mainPanel.setMaximumSize(new java.awt.Dimension(770, 548));
         mainPanel.setMinimumSize(new java.awt.Dimension(770, 548));
-        mainPanel.setPreferredSize(new java.awt.Dimension(997, 548));
         mainPanel.setLayout(new java.awt.CardLayout());
 
         dashboardPanel.setBackground(new java.awt.Color(222, 222, 229));
@@ -2698,7 +2813,7 @@ public Dashboard() {
         crudPengeluaranPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelIdPengeluaran.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        labelIdPengeluaran.setText("Id Pengeluaran");
+        labelIdPengeluaran.setText("No Pengeluaran");
         crudPengeluaranPanel.add(labelIdPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         labelJenisPengeluaran.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -2852,7 +2967,7 @@ public Dashboard() {
 
             },
             new String [] {
-                "No", "Id", "Jenis Pengeluaran", "Keterangan", "Jumlah", "Total Pengeluaran", "Tgl-Pengeluaran"
+                "No", "No Pengeluaran", "Jenis Pengeluaran", "Keterangan", "Jumlah", "Total Pengeluaran", "Tgl-Pengeluaran"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -2879,7 +2994,7 @@ public Dashboard() {
         });
         tabelPengeluaranPanel.setViewportView(tabelPengeluaran);
 
-        pengeluaranPanel.add(tabelPengeluaranPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 700, 220));
+        pengeluaranPanel.add(tabelPengeluaranPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 700, 230));
 
         mainPanel.add(pengeluaranPanel, "card10");
 
@@ -3173,23 +3288,23 @@ public Dashboard() {
         crudKelolaAkunPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelId.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        labelId.setText("Id User");
-        crudKelolaAkunPanel.add(labelId, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
+        labelId.setText("ID User");
+        crudKelolaAkunPanel.add(labelId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 90, -1));
 
         labelUsernameKelola.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelUsernameKelola.setText("Username");
-        crudKelolaAkunPanel.add(labelUsernameKelola, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        crudKelolaAkunPanel.add(labelUsernameKelola, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         labelPassKelola.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelPassKelola.setText("Password");
-        crudKelolaAkunPanel.add(labelPassKelola, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+        crudKelolaAkunPanel.add(labelPassKelola, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         labelCariAkun.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelCariAkun.setText("Cari :");
         crudKelolaAkunPanel.add(labelCariAkun, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 176, -1, 20));
 
         txtusername.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        crudKelolaAkunPanel.add(txtusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 150, 30));
+        crudKelolaAkunPanel.add(txtusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 150, 30));
 
         cbUsersKelola.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         cbUsersKelola.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kasir", "Admin" }));
@@ -3201,7 +3316,7 @@ public Dashboard() {
         crudKelolaAkunPanel.add(cbUsersKelola, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 150, 30));
 
         txtpassword.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        crudKelolaAkunPanel.add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 150, 30));
+        crudKelolaAkunPanel.add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 150, 30));
 
         btnSimpanUsers.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnSimpanUsers.setForeground(new java.awt.Color(64, 64, 122));
@@ -3246,7 +3361,7 @@ public Dashboard() {
         crudKelolaAkunPanel.add(btnHapusUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 30, 110, -1));
 
         txtnama.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        crudKelolaAkunPanel.add(txtnama, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 150, 30));
+        crudKelolaAkunPanel.add(txtnama, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 150, 30));
 
         btnResetUsers.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnResetUsers.setForeground(new java.awt.Color(64, 64, 122));
@@ -3271,13 +3386,13 @@ public Dashboard() {
 
         labelNamaKelola.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelNamaKelola.setText("Nama");
-        crudKelolaAkunPanel.add(labelNamaKelola, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        crudKelolaAkunPanel.add(labelNamaKelola, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
 
         txtidUser.setEditable(false);
         txtidUser.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtidUser.setDisabledTextColor(new java.awt.Color(64, 64, 122));
         txtidUser.setEnabled(false);
-        crudKelolaAkunPanel.add(txtidUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 100, 30));
+        crudKelolaAkunPanel.add(txtidUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 150, 30));
 
         labelCbUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelCbUser.setText("Akses Level");
@@ -3538,12 +3653,12 @@ public Dashboard() {
             if (txtnama.getText().equals("") ||txtpassword.getText().equals("") || txtnama.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Isi field terlebih dahulu !");
             } else {
-                String sql = "INSERT INTO users VALUES (null,'"+txtusername.getText()+"',"
+                String sql = "INSERT INTO users VALUES ('"+txtidUser.getText()+"', '"+txtusername.getText()+"',"
                     + " '"+txtpassword.getText()+"', '"+txtnama.getText()+"', '"+cbUsersKelola.getSelectedItem()+"')";
                 Connection conn = (Connection)Koneksi.getKoneksi();
                 PreparedStatement pst = conn.prepareStatement(sql);
                 pst.execute();
-                tampilDataUsers(); nullTableUsers(); 
+                tampilDataUsers(); nullTableUsers(); autoKodeUser();
                 JOptionPane.showMessageDialog(null, "Data Users Berhasil Ditambah !");
             }
         }catch(HeadlessException | SQLException e) {
@@ -3560,7 +3675,7 @@ public Dashboard() {
             Connection conn = (Connection)Koneksi.getKoneksi();
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
-            tampilDataUsers(); nullTableUsers();
+            tampilDataUsers(); nullTableUsers(); autoKodeUser();
             JOptionPane.showMessageDialog(null, "Data Users Berhasil Diubah !");
         }catch(HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -3587,7 +3702,7 @@ public Dashboard() {
 
     private void btnResetUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetUsersActionPerformed
         // TODO add your handling code here:
-        nullTableUsers();
+        nullTableUsers(); autoKodeUser();
     }//GEN-LAST:event_btnResetUsersActionPerformed
 
     private void txtcariUsersKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcariUsersKeyReleased
@@ -3799,22 +3914,7 @@ public Dashboard() {
 
     private void cetakDataProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetakDataProdukActionPerformed
         // TODO add your handling code here:
-        File reportFile = new File(".");
-        String dirr = "";
-        try {
-            String sql = "SELECT * FROM produk";        
-            Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
-            dirr = reportFile.getCanonicalPath()+ "/src/reports/";
-            JasperDesign design = JRXmlLoader.load(dirr + "reportProduk.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport(design);
-            ResultSet rs = stmt.executeQuery(sql);
-            JRResultSetDataSource rsDataSource = new JRResultSetDataSource(rs);
-            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), rsDataSource);
-            JasperViewer.viewReport(jp);
-        } catch (SQLException | IOException | JRException ex) {
-            JOptionPane.showMessageDialog(null, "Gagal Cetak Data Produk" + ex);
-        }
+        cetakDataProduk();
     }//GEN-LAST:event_cetakDataProdukActionPerformed
 
     private void tabelTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelTransaksiMouseClicked
@@ -3915,46 +4015,6 @@ public Dashboard() {
     private void txtTglActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTglActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTglActionPerformed
-    
-    private void functionAddNota() {
-       DefaultTableModel model = (DefaultTableModel) tabelInputTransaksi.getModel();
-       Statement st;    
-       int total, bayar;
-       total = Integer.valueOf(txtTotalBayar.getText());
-       bayar = Integer.valueOf(txtBayar.getText());
-        
-        try {
-           Connection conn = (Connection)Koneksi.getKoneksi();
-           st = conn.createStatement();
-            if(total > bayar) {
-                JOptionPane.showMessageDialog(null, "Uang Tidak Cukup Untuk Melakukan Pembayaran !");
-            } else {
-               for (int i=0; i < model.getRowCount(); i++){
-               String kodeBarang = model.getValueAt(i,1).toString();
-               String namaBarang = model.getValueAt(i,2).toString();
-               String hargaBarang = model.getValueAt(i,3).toString();
-               String qtyBarang = model.getValueAt(i,4).toString();
-               String totalHarga = model.getValueAt(i,6).toString();
-               
-               String sqlQuery = "INSERT INTO `transaksi_detail` "
-                       + "(`id_detail`,`no_transaksi`, `nama_customer` , `kode_barang`, `nama_barang`, `jumlah`, "
-                       + "`harga_jual`, `total`, `total_bayar`, `kembalian`, `tgl_transaksi`)"
-                       + " VALUES (default,'"+transaksiKode.getText()+"', '"+cbCustomer.getSelectedItem()+"', "
-                       + "'"+kodeBarang+"','"+namaBarang+"','"+qtyBarang+"','"+hargaBarang+"','"+totalHarga+"', "
-                       + "'"+txtBayar.getText()+"', '"+txtKembalian.getText()+"', '"+txtTgl.getText()+"')";
-               st.addBatch(sqlQuery);
-            } 
-                int [] rowsInserted = st.executeBatch();
-                JOptionPane.showMessageDialog(null, "Barang Berhasil Dibayar !");
-                JOptionPane.showMessageDialog(null, "Tunggu Proses Cetak Struk !");
-                strukTransaksi();
-           }           
-        }catch(SQLException e) {
-           JOptionPane.showMessageDialog(null, "Tambah Pembayaran Error !" + e.getMessage());
-        }
-        tampilDataPenjualan(); dashboardNewTransaksi(); 
-        dateTransaksi(); countData(); nullTransaksi();
-    }
     
     private void tambahNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahNotaActionPerformed
         // TODO add your handling code here:
@@ -4112,13 +4172,13 @@ public Dashboard() {
                 JOptionPane.showMessageDialog(null, "Field Tidak Boleh Kosong !");
             } else {
               String sql = "INSERT INTO pengeluaran (`id_pengeluaran`,`jenis_pengeluaran`,`keterangan`,`jumlah`,"
-                    + "`total_pengeluaran`,`tgl_pengeluaran`) VALUES (default ,'"+cbPengeluaran.getSelectedItem()+"', "
+                    + "`total_pengeluaran`,`tgl_pengeluaran`) VALUES ('"+txtIdPengeluaran.getText()+"' ,'"+cbPengeluaran.getSelectedItem()+"', "
                     + "'"+txtKeteranganPengeluaran.getText()+"', '"+txtJumlahPengeluaran.getText()+"',"
                     + "'"+txtTotalPengeluaran.getText()+"','"+tglPengeluaran+"')";
               Connection conn = (Connection)Koneksi.getKoneksi();
               PreparedStatement pst = conn.prepareStatement(sql);
               pst.execute();
-              tampilDataPengeluaran();  nullTablePengeluaran(); countData();
+              tampilDataPengeluaran();  nullTablePengeluaran(); countData(); autoKodePengeluaran();
 
               JOptionPane.showMessageDialog(null, "Data Pengeluaran Berhasil Ditambah !");
             } 
@@ -4139,7 +4199,7 @@ public Dashboard() {
             Connection conn = (Connection)Koneksi.getKoneksi();
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
-            tampilDataPengeluaran(); nullTablePengeluaran(); countData();
+            tampilDataPengeluaran(); nullTablePengeluaran(); countData(); autoKodePengeluaran();
             JOptionPane.showMessageDialog(null, "Data Pengeluaran Berhasil Diubah !");
         }catch(HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -4166,7 +4226,7 @@ public Dashboard() {
 
     private void btnResetPengeluaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPengeluaranActionPerformed
         // TODO add your handling code here:
-        nullTablePengeluaran();
+        nullTablePengeluaran(); autoKodePengeluaran();
     }//GEN-LAST:event_btnResetPengeluaranActionPerformed
 
     private void txtcariPengeluaranKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcariPengeluaranKeyReleased
@@ -4241,13 +4301,13 @@ public Dashboard() {
 
     private void logoutMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuActionPerformed
         // TODO add your handling code here:
-        int confirmLogout = JOptionPane.showConfirmDialog(null, "Anda yakin ingin logout ?", "Konfirmasi Keluar", 
+        int confirmLogout = JOptionPane.showConfirmDialog(null, "Anda Yakin Ingin Logout ?", "Konfirmasi Keluar", 
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (confirmLogout == JOptionPane.YES_OPTION){
-            this.dispose();
             new Login().setVisible(true);
             JOptionPane.showMessageDialog(null, "Berhasil Logout!");
         }
+        this.dispose();
     }//GEN-LAST:event_logoutMenuActionPerformed
 
     private void txtTlpCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTlpCustomerActionPerformed
@@ -4290,8 +4350,8 @@ public Dashboard() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static final javax.swing.JComboBox<String> JcBulan = new javax.swing.JComboBox<>();
-    public static final com.toedter.calendar.JYearChooser JcTahun = new com.toedter.calendar.JYearChooser();
+    private javax.swing.JComboBox<String> JcBulan;
+    private com.toedter.calendar.JYearChooser JcTahun;
     private javax.swing.JScrollPane JpTbPenjualan;
     private javax.swing.JScrollPane JptabelInputTransaksi;
     private javax.swing.JScrollPane JptabelTransaksi;
@@ -4316,7 +4376,7 @@ public Dashboard() {
     private javax.swing.JButton btnResetProduk;
     private javax.swing.JButton btnResetSupplier;
     private javax.swing.JButton btnResetUsers;
-    public static final javax.swing.JButton btnSearchByDate = new javax.swing.JButton();
+    private javax.swing.JButton btnSearchByDate;
     private javax.swing.JButton btnSimpanCustomer;
     private javax.swing.JButton btnSimpanPengeluaran;
     private javax.swing.JButton btnSimpanProduk;
