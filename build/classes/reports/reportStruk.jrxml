@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="250" pageHeight="400" columnWidth="210" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.7715610000000022"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="kode_transaksi" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT transaksi_detail.no_transaksi, users.name ,customer.nama_customer, produk.kode_barang, produk.nama_barang, produk.harga_jual, transaksi_detail.jumlah_beli, transaksi_detail.total_harga, transaksi_detail.total_bayar, transaksi_detail.total_kembalian, transaksi_detail.tgl_transaksi FROM customer JOIN transaksi_detail ON customer.id_customer = transaksi_detail.id_customer JOIN produk ON produk.id_produk = transaksi_detail.id_produk JOIN users ON users.id_user = transaksi_detail.id_user WHERE no_transaksi = $P{kode_transaksi} ;]]>
+	</queryString>
+	<field name="no_transaksi" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="nama_customer" class="java.lang.String"/>
+	<field name="kode_barang" class="java.lang.String"/>
+	<field name="nama_barang" class="java.lang.String"/>
+	<field name="harga_jual" class="java.lang.Integer"/>
+	<field name="jumlah_beli" class="java.lang.Integer"/>
+	<field name="total_harga" class="java.lang.Integer"/>
+	<field name="total_bayar" class="java.lang.Integer"/>
+	<field name="total_kembalian" class="java.lang.Integer"/>
+	<field name="tgl_transaksi" class="java.sql.Timestamp"/>
+	<variable name="total_harga_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_harga}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="52" y="8" width="127" height="17"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOKO SUMBER REJEKI]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="1" width="52" height="45"/>
+				<imageExpression><![CDATA["B:\\SumberRejekiPOS\\SumberRejekiPOS\\src\\asset\\img\\tsr-logo_struk.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="52" y="23" width="127" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="5"/>
+				</textElement>
+				<text><![CDATA[Griya Sari Permai, RT05/RW02, Blok C11, Kec.Cipayung Kel.Ratu Jaya, Kota Depok]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="47" width="210" height="1" forecolor="#40407A" backcolor="#40407A"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="0" width="37" height="9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Transaksi :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="38" y="0" width="39" height="9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_transaksi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="17" width="37" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer       :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="37" y="17" width="49" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_customer}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="92" y="0" width="50" height="10"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal Transaksi :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="142" y="0" width="68" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMM yyyy, HH:mm", new Locale("id", "ID")).format($F{tgl_transaksi})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="92" y="18" width="60" height="10"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kasir                        :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="142" y="18" width="61" height="10"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="30" width="210" height="1" forecolor="#000000" backcolor="#000000"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="13" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="43" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[KODE BARANG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="0" width="40" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[NAMA BARANG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="0" width="37" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[JUMLAH BELI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="0" width="37" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[HARGA / PCS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="11" width="210" height="1" forecolor="#000000" backcolor="#000000"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="6" y="0" width="37" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kode_barang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="1" width="64" height="16"/>
+				<textElement verticalAlignment="Top">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_barang}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,###,###">
+				<reportElement x="173" y="0" width="37" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{harga_jual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="134" y="0" width="29" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jumlah_beli}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="56" splitType="Stretch">
+			<staticText>
+				<reportElement x="147" y="27" width="33" height="7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kembalian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="7" width="34" height="7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Harga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="17" width="33" height="7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Bayar]]></text>
+			</staticText>
+			<textField pattern="Rp #,###,###">
+				<reportElement x="182" y="6" width="35" height="8"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_harga_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,###,###">
+				<reportElement x="182" y="17" width="35" height="7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_bayar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,###,###">
+				<reportElement x="182" y="27" width="35" height="7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_kembalian}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="210" height="1" forecolor="#000000" backcolor="#000000"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="23" y="15" width="36" height="9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hormat Kami]]></text>
+			</staticText>
+			<line>
+				<reportElement x="6" y="51" width="71" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

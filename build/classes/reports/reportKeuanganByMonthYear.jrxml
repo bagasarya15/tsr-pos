@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="9"/>
+	<parameter name="byMonth" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM laporan_keuangan WHERE 
+tgl_dibuat = $P{byMonth};]]>
+	</queryString>
+	<field name="id_keuangan" class="java.lang.Integer"/>
+	<field name="tgl_dibuat" class="java.sql.Date"/>
+	<field name="total_penjualan" class="java.lang.Integer"/>
+	<field name="beban_pengeluaran" class="java.lang.Integer"/>
+	<field name="laba_bersih" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="134" splitType="Stretch">
+			<staticText>
+				<reportElement x="197" y="29" width="456" height="38"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN KEUANGAN TOKO SUMBER REJEKI]]></text>
+			</staticText>
+			<image>
+				<reportElement x="18" y="2" width="292" height="130"/>
+				<imageExpression><![CDATA["B:\\SumberRejekiPOS\\SumberRejekiPOS\\src\\asset\\img\\tsr-logo.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="131" width="802" height="1" forecolor="#40407A" backcolor="#40407A"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="2" width="802" height="1" forecolor="#40407A" backcolor="#40407A"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="212" y="79" width="411" height="20"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Griya Sari Permai, RT05/RW02, Blok C11, Kec.Cipayung, Kel.Ratu Jaya, Kota Depok]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="37" y="13" width="52" height="20" forecolor="#40407A" backcolor="#40407A"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="13" width="81" height="20" forecolor="#40407A" backcolor="#40407A"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KETERANGAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="13" width="81" height="20" forecolor="#40407A" backcolor="#40407A"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[JUMLAH (Rp)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="546" y="13" width="81" height="20" forecolor="#40407A" backcolor="#40407A"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBTOTAL (Rp)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="44" width="802" height="1" forecolor="#000000" backcolor="#000000"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="802" height="1" forecolor="#000000" backcolor="#000000"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="143" splitType="Stretch">
+			<textField pattern="Rp #,###,###">
+				<reportElement x="374" y="58" width="138" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{beban_pengeluaran}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,###,###">
+				<reportElement x="374" y="13" width="110" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_penjualan}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="12" width="177" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pendapatan ( Penjualan )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="57" width="164" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pengeluaran ( Beban )]]></text>
+			</staticText>
+			<textField pattern="Rp #,###,###">
+				<reportElement x="555" y="111" width="105" height="20" forecolor="#40407A" backcolor="#40407A"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{laba_bersih}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="49" y="12" width="10" height="20"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="111" width="83" height="20" forecolor="#40407A" backcolor="#40407A"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[LABA BERSIH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="57" width="10" height="20"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="102" width="802" height="1" forecolor="#000000" backcolor="#000000"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="139" width="802" height="1" forecolor="#000000" backcolor="#000000"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="117" splitType="Stretch">
+			<line>
+				<reportElement x="612" y="97" width="157" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="566" y="11" width="191" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Depok, " + new SimpleDateFormat("EEEE dd MMMM yyyy", new Locale("id", "ID")).format($F{tgl_dibuat})]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

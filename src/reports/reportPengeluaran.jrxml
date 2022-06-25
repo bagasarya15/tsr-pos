@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM pengeluaran;]]>
+	</queryString>
+	<field name="id_pengeluaran" class="java.lang.Integer"/>
+	<field name="no_pengeluaran" class="java.lang.String"/>
+	<field name="jenis_pengeluaran" class="java.lang.String"/>
+	<field name="keterangan" class="java.lang.String"/>
+	<field name="jumlah" class="java.lang.String"/>
+	<field name="total_pengeluaran" class="java.lang.Integer"/>
+	<field name="tgl_pengeluaran" class="java.sql.Date"/>
+	<variable name="sumTotalPengeluaran" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_pengeluaran}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<image>
+				<reportElement x="21" y="4" width="292" height="118"/>
+				<imageExpression><![CDATA["B:\\SumberRejekiPOS\\SumberRejekiPOS\\src\\asset\\img\\tsr-logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="190" y="27" width="471" height="38"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PENGELUARAN TOKO SUMBER REJEKI]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="110" width="802" height="1" forecolor="#40407A" backcolor="#40407A"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="4" width="802" height="1" forecolor="#40407A" backcolor="#40407A"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="215" y="75" width="411" height="20"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Griya Sari Permai, RT05/RW02, Blok C11, Kec.Cipayung, Kel.Ratu Jaya, Kota Depok]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="16" y="7" width="133" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO PENGELUARAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="8" width="60" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[JUMLAH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="518" y="8" width="133" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PENGELUARAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="671" y="8" width="116" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TGL-PENGELUARAN]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="3" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="167" y="7" width="133" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[JENIS PENGELUARAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="7" width="81" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KETERANGAN]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="32" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="15" y="1" width="103" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Segoe UI"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_pengeluaran}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="122" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Segoe UI"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{keterangan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,###,###">
+				<reportElement x="548" y="1" width="113" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Segoe UI"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_pengeluaran}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="0" width="109" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Segoe UI"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jenis_pengeluaran}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="0" width="56" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Segoe UI"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="672" y="1" width="116" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Segoe UI"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID")).format($F{tgl_pengeluaran})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="1" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="192">
+			<staticText>
+				<reportElement x="15" y="5" width="129" height="20" forecolor="#000000" backcolor="#000000"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PENGELUARAN]]></text>
+			</staticText>
+			<textField pattern="Rp #,###,###">
+				<reportElement x="544" y="5" width="127" height="20" forecolor="#000000" backcolor="#000000"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumTotalPengeluaran}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="560" y="60" width="191" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Depok, " + new SimpleDateFormat("EEEE dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="609" y="146" width="157" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="29" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
