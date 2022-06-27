@@ -67,7 +67,6 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TSR POS - LOGIN");
-        setMaximumSize(new java.awt.Dimension(930, 500));
         setMinimumSize(new java.awt.Dimension(930, 500));
 
         body.setBackground(new java.awt.Color(64, 64, 122));
@@ -172,6 +171,11 @@ public class Login extends javax.swing.JFrame {
                 loginButtonMouseExited(evt);
             }
         });
+        loginButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginButtonKeyPressed(evt);
+            }
+        });
         cardLogin.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, 90, -1));
 
         resetButton.setBackground(new java.awt.Color(64, 64, 122));
@@ -233,17 +237,9 @@ public class Login extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtuserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtuserActionPerformed
-
-    private void txtpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpassActionPerformed
-
-    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-       try{
+    
+    public void functionLogin() {
+         try{
             Connection koneksi = (Connection)Koneksi.getKoneksi();
             Statement stat = koneksi.createStatement();
             ResultSet rs = stat.executeQuery(
@@ -309,10 +305,21 @@ public class Login extends javax.swing.JFrame {
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Koneksi gagal : "+e.getMessage());
         }
+    }
+    private void txtuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtuserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtuserActionPerformed
+
+    private void txtpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtpassActionPerformed
+
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+      functionLogin();
     }//GEN-LAST:event_loginButtonMouseClicked
 
     private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
- 
+   
     }//GEN-LAST:event_loginButtonMouseEntered
 
     private void loginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseExited
@@ -334,6 +341,10 @@ public class Login extends javax.swing.JFrame {
     private void resetButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetButtonMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_resetButtonMouseExited
+
+    private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
+      
+    }//GEN-LAST:event_loginButtonKeyPressed
 
     /**
      * @param args the command line arguments

@@ -52,72 +52,72 @@
 		</band>
 	</title>
 	<columnHeader>
-		<band height="37">
+		<band height="29">
 			<staticText>
-				<reportElement x="3" y="7" width="80" height="20"/>
+				<reportElement x="3" y="5" width="80" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NO TRANSAKSI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="93" y="7" width="62" height="20"/>
+				<reportElement x="93" y="5" width="62" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CUSTOMER]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="264" y="7" width="90" height="20"/>
+				<reportElement x="264" y="5" width="90" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NAMA BARANG]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="7" width="57" height="20"/>
+				<reportElement x="362" y="5" width="57" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[HARGA JUAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="423" y="7" width="65" height="20"/>
+				<reportElement x="423" y="5" width="65" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JUMLAH BELI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="498" y="7" width="80" height="20"/>
+				<reportElement x="498" y="5" width="80" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL HARGA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="588" y="7" width="80" height="20"/>
+				<reportElement x="588" y="5" width="80" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL BAYAR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="690" y="7" width="95" height="20"/>
+				<reportElement x="690" y="5" width="95" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TGL-TRANSAKSI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="7" width="85" height="20"/>
+				<reportElement x="170" y="5" width="85" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[KODE BARANG]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="32" width="802" height="1"/>
+				<reportElement x="0" y="28" width="802" height="1"/>
 				<graphicElement>
 					<pen lineWidth="2.0" lineStyle="Double"/>
 				</graphicElement>
@@ -131,7 +131,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="26">
+		<band height="22">
 			<textField>
 				<reportElement x="3" y="1" width="80" height="20"/>
 				<textElement verticalAlignment="Middle">
@@ -198,9 +198,9 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="154">
+		<band height="146">
 			<staticText>
-				<reportElement x="16" y="10" width="123" height="20" forecolor="#000000" backcolor="#000000"/>
+				<reportElement x="16" y="8" width="123" height="20" forecolor="#000000" backcolor="#000000"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 					<paragraph lineSpacing="Double"/>
@@ -208,7 +208,7 @@
 				<text><![CDATA[TOTAL PENJUALAN]]></text>
 			</staticText>
 			<textField pattern="Rp #,###,###">
-				<reportElement x="533" y="10" width="100" height="20" forecolor="#000000" backcolor="#000000"/>
+				<reportElement x="533" y="8" width="100" height="20" forecolor="#000000" backcolor="#000000"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 					<paragraph lineSpacing="Double"/>
@@ -223,19 +223,19 @@
 				<textFieldExpression><![CDATA["Depok, " + new SimpleDateFormat("EEEE dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="2" width="802" height="1"/>
+				<reportElement x="0" y="0" width="802" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.75" lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="38" width="802" height="1"/>
+				<reportElement x="0" y="36" width="802" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.75" lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="533" y="151" width="214" height="1"/>
+				<reportElement x="533" y="142" width="214" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 				</graphicElement>
