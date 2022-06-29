@@ -291,24 +291,6 @@ public Dashboard() {
            JOptionPane.showMessageDialog(null, "Tampil Data Produk Koneksi Database Gagal" + e.getMessage());
         } 
     }
-    
-    private void cetakDataProduk(){
-        try {
-            String sql = "SELECT produk.kode_barang, produk.nama_barang, produk.kategori, produk.harga_beli, produk.harga_jual,"
-                    + " produk.stok, supplier.nama_supplier FROM supplier JOIN produk"
-                    + " ON produk.id_supplier = supplier.id_supplier";        
-            Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
-            String report = "/reports/reportInventory.jasper";
-            InputStream path = getClass().getResourceAsStream(report);
-            ResultSet rs = stmt.executeQuery(sql);
-            JRResultSetDataSource rsDataSource = new JRResultSetDataSource(rs);
-            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), rsDataSource);
-            JasperViewer.viewReport(JPrint, false);
-        } catch (SQLException | JRException ex) {
-            JOptionPane.showMessageDialog(null, "Gagal Cetak Data Produk" + ex);
-        }
-    }
     // End Menu Produk  
     
     //Function Menu Supplier
@@ -564,14 +546,13 @@ public Dashboard() {
     private void strukTransaksi() {
         try {      
             Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
             String report = "/reports/reportStruk.jasper";
             InputStream path = getClass().getResourceAsStream(report);
             HashMap hash = new HashMap();
             hash.put("kode_transaksi",transaksiKode.getText());
             JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
             JasperViewer.viewReport(JPrint, false);
-        } catch (SQLException | JRException ex) {
+        } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Struk" + ex);
         }
     }
@@ -828,6 +809,18 @@ public Dashboard() {
            JOptionPane.showMessageDialog(null, "Tabel Inventory Koneksi Database Gagal" + e.getMessage());
         } 
     }
+    
+      private void cetakDataProduk(){
+        try {      
+            Connection conn = (Connection)Koneksi.getKoneksi();
+            String report = "/reports/reportInventory.jasper";
+            InputStream path = getClass().getResourceAsStream(report);
+            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), conn);
+            JasperViewer.viewReport(JPrint, false);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Gagal Cetak Data Produk" + ex);
+        }
+    }
     //End Menu Laporan Inventory
     
     //Menu Laporan Pengeluaran
@@ -867,17 +860,13 @@ public Dashboard() {
     }
     
     private void cetakLaporanPengeluaran() {
-        try {
-            String sql = "SELECT * FROM pengeluaran";        
+        try {     
             Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
             String report = "/reports/reportPengeluaran.jasper";
             InputStream path = getClass().getResourceAsStream(report);
-            ResultSet rs = stmt.executeQuery(sql);
-            JRResultSetDataSource rsDataSource = new JRResultSetDataSource(rs);
-            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), rsDataSource);
+            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), conn);
             JasperViewer.viewReport(JPrint, false);
-        } catch (SQLException | JRException ex) {
+        } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Laporan Pengeluaran" + ex);
         }
     }
@@ -887,7 +876,6 @@ public Dashboard() {
         String tahun = String.valueOf(JcTahunPengeluaran.getYear());
         try {      
             Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
             String report = "/reports/reportPengeluaranByMonthYear.jasper";
             InputStream path = getClass().getResourceAsStream(report);
             HashMap hash = new HashMap();
@@ -895,7 +883,7 @@ public Dashboard() {
             hash.put("pengeluaranByYear", tahun);
             JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
             JasperViewer.viewReport(JPrint, false);
-        } catch (SQLException | JRException ex) {
+        } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Laporan Keuangan" + ex);
         }
     }
@@ -957,14 +945,13 @@ public Dashboard() {
     private void cetakDataByInvoice() {
         try {      
             Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
             String report = "/reports/reportStruk.jasper";
             InputStream path = getClass().getResourceAsStream(report);
             HashMap hash = new HashMap();
             hash.put("kode_transaksi", txtCariPenjualan.getText());
             JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
             JasperViewer.viewReport(JPrint, false);
-        } catch (SQLException | JRException ex) {
+        } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Struk" + ex);
         }
     }
@@ -974,7 +961,6 @@ public Dashboard() {
         String tahun = String.valueOf(JcTahunPenjualan.getYear());
         try {      
             Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
             String report = "/reports/reportPenjualanByMonthYear.jasper";
             InputStream path = getClass().getResourceAsStream(report);
             HashMap hash = new HashMap();
@@ -982,27 +968,19 @@ public Dashboard() {
             hash.put("ByYear", tahun);
             JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
             JasperViewer.viewReport(JPrint, false);
-        } catch (SQLException |JRException ex) {
+        } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Laporan Penjualan" + ex);
         }
     }
     
     private void cetakDataPenjualan(){
-        try {
-            String sql = "SELECT transaksi_detail.no_transaksi, customer.nama_customer, produk.kode_barang, "
-                    + "produk.nama_barang, produk.harga_jual, transaksi_detail.jumlah_beli, transaksi_detail.total_harga, "
-                    + "transaksi_detail.total_bayar, transaksi_detail.total_kembalian, transaksi_detail.tgl_transaksi "
-                    + "FROM customer JOIN transaksi_detail ON customer.id_customer = transaksi_detail.id_customer "
-                    + "JOIN produk ON produk.id_produk = transaksi_detail.id_produk";        
+        try {       
             Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
             String report = "/reports/reportPenjualan.jasper";
             InputStream path = getClass().getResourceAsStream(report);
-            ResultSet rs = stmt.executeQuery(sql);
-            JRResultSetDataSource rsDataSource = new JRResultSetDataSource(rs);
-            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), rsDataSource);
+            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), conn);
             JasperViewer.viewReport(JPrint, false);
-        } catch (SQLException | JRException ex) {
+        } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Data Penjualan" + ex);
         }
     }
@@ -1111,18 +1089,13 @@ public Dashboard() {
     }
     
     private void cetakLaporanKeuangan() {
-        try {
-            String sql = "SELECT * FROM laporan_keuangan WHERE id_keuangan = (SELECT MAX(id_keuangan)"
-                    + " FROM laporan_keuangan)";        
+        try {     
             Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
             String report = "/reports/reportKeuangan.jasper";
             InputStream path = getClass().getResourceAsStream(report);
-            ResultSet rs = stmt.executeQuery(sql);
-            JRResultSetDataSource rsDataSource = new JRResultSetDataSource(rs);
-            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), rsDataSource);
+            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), conn);
             JasperViewer.viewReport(JPrint, false);
-        } catch (SQLException | JRException ex) {
+        } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Laporan Keuangan" + ex);
         }
     }
@@ -1130,14 +1103,13 @@ public Dashboard() {
     private void cetakKeuanganByMonthYear() {
         try {      
             Connection conn = (Connection)Koneksi.getKoneksi();
-            Statement stmt = conn.createStatement();
             String report = "/reports/reportKeuanganByMonthYear.jasper";
             InputStream path = getClass().getResourceAsStream(report);
             HashMap hash = new HashMap();
             hash.put("byMonth", txtCariKeuangan.getText());
             JasperPrint JPrint = JasperFillManager.fillReport(path , hash, conn);
             JasperViewer.viewReport(JPrint, false);
-        } catch (SQLException | JRException ex) {
+        } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Laporan Keuangan" + ex);
         }
     }

@@ -3,14 +3,15 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="48"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT * FROM laporan_keuangan WHERE 
-id_keuangan = (SELECT MAX(id_keuangan) FROM laporan_keuangan)]]>
+	<queryString>
+		<![CDATA[SELECT laporan_keuangan.id_keuangan, laporan_keuangan.tgl_dibuat, laporan_keuangan.total_penjualan, laporan_keuangan.beban_pengeluaran, laporan_keuangan.laba_bersih, logo.image FROM laporan_keuangan JOIN logo WHERE logo.id_logo = 1 AND id_keuangan = (SELECT MAX(id_keuangan) FROM laporan_keuangan);]]>
 	</queryString>
+	<field name="id_keuangan" class="java.lang.Integer"/>
 	<field name="tgl_dibuat" class="java.sql.Date"/>
 	<field name="total_penjualan" class="java.lang.Integer"/>
 	<field name="beban_pengeluaran" class="java.lang.Integer"/>
 	<field name="laba_bersih" class="java.lang.Integer"/>
+	<field name="image" class="java.io.InputStream"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -18,7 +19,7 @@ id_keuangan = (SELECT MAX(id_keuangan) FROM laporan_keuangan)]]>
 		<band height="133" splitType="Stretch">
 			<image>
 				<reportElement x="18" y="1" width="292" height="130"/>
-				<imageExpression><![CDATA["B:\\SumberRejekiPOS\\SumberRejekiPOS\\src\\asset\\img\\tsr-logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{image}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="197" y="28" width="456" height="38"/>

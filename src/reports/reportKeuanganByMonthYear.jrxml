@@ -2,17 +2,17 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="9"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="byMonth" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM laporan_keuangan WHERE 
-tgl_dibuat = $P{byMonth};]]>
+		<![CDATA[SELECT laporan_keuangan.id_keuangan, laporan_keuangan.tgl_dibuat, laporan_keuangan.total_penjualan, laporan_keuangan.beban_pengeluaran, laporan_keuangan.laba_bersih, logo.image FROM laporan_keuangan JOIN logo WHERE logo.id_logo = 1 AND tgl_dibuat = $P{byMonth};]]>
 	</queryString>
 	<field name="id_keuangan" class="java.lang.Integer"/>
 	<field name="tgl_dibuat" class="java.sql.Date"/>
 	<field name="total_penjualan" class="java.lang.Integer"/>
 	<field name="beban_pengeluaran" class="java.lang.Integer"/>
 	<field name="laba_bersih" class="java.lang.Integer"/>
+	<field name="image" class="java.io.InputStream"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -27,7 +27,7 @@ tgl_dibuat = $P{byMonth};]]>
 			</staticText>
 			<image>
 				<reportElement x="18" y="2" width="292" height="130"/>
-				<imageExpression><![CDATA["B:\\SumberRejekiPOS\\SumberRejekiPOS\\src\\asset\\img\\tsr-logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{image}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="0" y="131" width="802" height="1" forecolor="#40407A" backcolor="#40407A"/>

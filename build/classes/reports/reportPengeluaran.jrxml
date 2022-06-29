@@ -4,15 +4,15 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[SELECT * FROM pengeluaran;]]>
+		<![CDATA[SELECT pengeluaran.no_pengeluaran, pengeluaran.jenis_pengeluaran, pengeluaran.keterangan, pengeluaran.jumlah, pengeluaran.total_pengeluaran, pengeluaran.tgl_pengeluaran, logo.image FROM pengeluaran JOIN logo WHERE logo.id_logo = 1;]]>
 	</queryString>
-	<field name="id_pengeluaran" class="java.lang.Integer"/>
 	<field name="no_pengeluaran" class="java.lang.String"/>
 	<field name="jenis_pengeluaran" class="java.lang.String"/>
 	<field name="keterangan" class="java.lang.String"/>
 	<field name="jumlah" class="java.lang.String"/>
 	<field name="total_pengeluaran" class="java.lang.Integer"/>
 	<field name="tgl_pengeluaran" class="java.sql.Date"/>
+	<field name="image" class="java.io.InputStream"/>
 	<variable name="sumTotalPengeluaran" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_pengeluaran}]]></variableExpression>
 	</variable>
@@ -23,7 +23,7 @@
 		<band height="132" splitType="Stretch">
 			<image>
 				<reportElement x="21" y="4" width="292" height="118"/>
-				<imageExpression><![CDATA["B:\\SumberRejekiPOS\\SumberRejekiPOS\\src\\asset\\img\\tsr-logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{image}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="190" y="27" width="471" height="38"/>

@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[SELECT produk.kode_barang, produk.nama_barang, produk.kategori, produk.harga_beli, produk.harga_jual, produk.stok, supplier.nama_supplier FROM supplier JOIN produk ON produk.id_supplier = supplier.id_supplier;]]>
+		<![CDATA[SELECT produk.kode_barang, produk.nama_barang, produk.kategori, produk.harga_beli, produk.harga_jual, produk.stok, supplier.nama_supplier, logo.image FROM supplier JOIN produk ON produk.id_supplier = supplier.id_supplier, logo WHERE logo.id_logo = 1 ORDER BY kode_barang ASC;]]>
 	</queryString>
 	<field name="kode_barang" class="java.lang.String"/>
 	<field name="nama_barang" class="java.lang.String"/>
@@ -13,6 +13,7 @@
 	<field name="harga_jual" class="java.lang.Integer"/>
 	<field name="stok" class="java.lang.Integer"/>
 	<field name="nama_supplier" class="java.lang.String"/>
+	<field name="image" class="java.io.InputStream"/>
 	<variable name="stok_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{stok}]]></variableExpression>
 	</variable>
@@ -35,7 +36,7 @@
 		<band height="131" splitType="Stretch">
 			<image>
 				<reportElement x="2" y="-2" width="292" height="130"/>
-				<imageExpression><![CDATA["B:\\SumberRejekiPOS\\SumberRejekiPOS\\src\\asset\\img\\tsr-logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{image}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="189" y="24" width="476" height="38"/>
