@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="24"/>
+	<property name="ireport.y" value="99"/>
 	<parameter name="ByMonth" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -59,72 +59,72 @@
 		</band>
 	</title>
 	<columnHeader>
-		<band height="29">
+		<band height="24">
 			<staticText>
-				<reportElement x="3" y="5" width="80" height="20"/>
+				<reportElement x="3" y="2" width="80" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NO TRANSAKSI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="93" y="5" width="62" height="20"/>
+				<reportElement x="93" y="2" width="62" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CUSTOMER]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="264" y="5" width="90" height="20"/>
+				<reportElement x="264" y="2" width="90" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NAMA BARANG]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="5" width="57" height="20"/>
+				<reportElement x="362" y="2" width="57" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[HARGA JUAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="423" y="5" width="65" height="20"/>
+				<reportElement x="423" y="2" width="65" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JUMLAH BELI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="498" y="5" width="80" height="20"/>
+				<reportElement x="498" y="2" width="80" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL HARGA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="588" y="5" width="80" height="20"/>
+				<reportElement x="588" y="2" width="80" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL BAYAR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="690" y="5" width="95" height="20"/>
+				<reportElement x="690" y="2" width="95" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TGL-TRANSAKSI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="5" width="85" height="20"/>
+				<reportElement x="170" y="2" width="85" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[KODE BARANG]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="28" width="802" height="1"/>
+				<reportElement x="0" y="22" width="802" height="1"/>
 				<graphicElement>
 					<pen lineWidth="2.0" lineStyle="Double"/>
 				</graphicElement>
@@ -138,65 +138,65 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22">
+		<band height="21">
 			<textField>
-				<reportElement x="3" y="1" width="80" height="20"/>
+				<reportElement x="3" y="-1" width="80" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no_transaksi}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="93" y="1" width="80" height="20"/>
+				<reportElement x="93" y="-1" width="80" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nama_customer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="274" y="1" width="70" height="20"/>
+				<reportElement x="274" y="-1" width="70" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nama_barang}]]></textFieldExpression>
 			</textField>
 			<textField pattern="Rp #,###,###">
-				<reportElement x="361" y="1" width="57" height="20"/>
+				<reportElement x="361" y="-1" width="57" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{harga_jual}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="451" y="1" width="23" height="20"/>
+				<reportElement x="451" y="-1" width="23" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{jumlah_beli}]]></textFieldExpression>
 			</textField>
 			<textField pattern="Rp #,###,###">
-				<reportElement x="509" y="1" width="80" height="20"/>
+				<reportElement x="509" y="-1" width="80" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total_harga}]]></textFieldExpression>
 			</textField>
 			<textField pattern="Rp #,###,###">
-				<reportElement x="596" y="1" width="80" height="20"/>
+				<reportElement x="596" y="-1" width="80" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total_bayar}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="676" y="1" width="124" height="20"/>
+				<reportElement x="676" y="-1" width="124" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMM yyyy, HH:mm", new Locale("id", "ID")).format($F{tgl_transaksi})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="187" y="1" width="82" height="20"/>
+				<reportElement x="187" y="-1" width="82" height="20"/>
 				<textElement>
 					<font fontName="Segoe UI" size="10"/>
 				</textElement>
