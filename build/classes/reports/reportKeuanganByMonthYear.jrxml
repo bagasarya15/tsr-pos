@@ -5,9 +5,8 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="byMonth" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT laporan_keuangan.id_keuangan, laporan_keuangan.tgl_dibuat, laporan_keuangan.total_penjualan, laporan_keuangan.beban_pengeluaran, laporan_keuangan.laba_bersih, logo.image FROM laporan_keuangan JOIN logo WHERE logo.id_logo = 1 AND tgl_dibuat = $P{byMonth};]]>
+		<![CDATA[SELECT laporan_keuangan.tgl_dibuat, laporan_keuangan.total_penjualan, laporan_keuangan.beban_pengeluaran, laporan_keuangan.laba_bersih, logo.image FROM laporan_keuangan JOIN logo WHERE logo.id_logo = 1 AND tgl_dibuat = $P{byMonth}]]>
 	</queryString>
-	<field name="id_keuangan" class="java.lang.Integer"/>
 	<field name="tgl_dibuat" class="java.sql.Date"/>
 	<field name="total_penjualan" class="java.lang.Integer"/>
 	<field name="beban_pengeluaran" class="java.lang.Integer"/>
