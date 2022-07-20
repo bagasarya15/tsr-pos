@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.1435888100000025"/>
+	<property name="ireport.x" value="731"/>
+	<property name="ireport.y" value="274"/>
 	<queryString>
 		<![CDATA[SELECT pengeluaran.no_pengeluaran, pengeluaran.jenis_pengeluaran, pengeluaran.keterangan, pengeluaran.jumlah, pengeluaran.total_pengeluaran, pengeluaran.tgl_pengeluaran, logo.image FROM pengeluaran JOIN logo WHERE logo.id_logo = 1;]]>
 	</queryString>
@@ -110,9 +110,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="15" y="1" width="103" height="20"/>
+				<reportElement x="15" y="0" width="103" height="20"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Segoe UI"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -128,7 +128,7 @@
 				<textFieldExpression><![CDATA[$F{keterangan}]]></textFieldExpression>
 			</textField>
 			<textField pattern="Rp #,###,###">
-				<reportElement x="548" y="1" width="113" height="20"/>
+				<reportElement x="548" y="0" width="113" height="20"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Segoe UI"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -152,7 +152,7 @@
 				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="672" y="1" width="116" height="20"/>
+				<reportElement x="672" y="0" width="116" height="20"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Segoe UI"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -161,14 +161,8 @@
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="3" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="1" splitType="Stretch"/>
-	</pageFooter>
 	<summary>
-		<band height="192">
+		<band height="136">
 			<staticText>
 				<reportElement x="15" y="5" width="129" height="20" forecolor="#000000" backcolor="#000000"/>
 				<textElement verticalAlignment="Middle">
@@ -184,20 +178,20 @@
 				<textFieldExpression><![CDATA[$V{sumTotalPengeluaran}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="560" y="60" width="191" height="20"/>
+				<reportElement x="560" y="41" width="191" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Depok, " + new SimpleDateFormat("EEEE dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="609" y="146" width="157" height="1"/>
+				<reportElement x="609" y="127" width="157" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="29" width="802" height="1"/>
+				<reportElement x="0" y="27" width="802" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.75" lineStyle="Dashed"/>
 				</graphicElement>

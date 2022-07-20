@@ -91,6 +91,7 @@ public Dashboard() {
         
         String bulan = String.valueOf(JcBulan.getSelectedItem());
         String tahun = String.valueOf(JcTahun.getYear());
+        DecimalFormat DF = new DecimalFormat("#,###,###");
         
         String query [] = {
             "SELECT SUM(jumlah_beli) AS search FROM transaksi_detail WHERE MONTHNAME(tgl_transaksi)='"+bulan+"'"
@@ -122,7 +123,8 @@ public Dashboard() {
                 Statement stmt = conn.createStatement();
                 ResultSet res  = stmt.executeQuery(query[i]);
                 if (res.next()){
-                    labels[i].setText(res.getString("search"));
+//                    labels[i].setText(res.getString("search"));
+                labels[i].setText(DF.format(res.getInt("search")));
                 }
             }catch (SQLException e){
                 System.out.println("searchByDate" + e.getMessage());
@@ -131,6 +133,7 @@ public Dashboard() {
     }
     
     private void countData() {
+        DecimalFormat DF = new DecimalFormat("#,###,###");
          String querys[] = {
             "SELECT SUM(stok) AS data FROM produk",
              
@@ -162,7 +165,8 @@ public Dashboard() {
                 Statement stmt = conn.createStatement();
                 ResultSet res  = stmt.executeQuery(querys[i]);
                 if (res.next()){
-                    labels[i].setText(res.getString("data"));
+//                    labels[i].setText(res.getString("data"));
+                labels[i].setText(DF.format(res.getInt("data")));
                 }
             }catch (SQLException e){
                 System.out.println("countData" +e.getMessage());
@@ -2395,7 +2399,7 @@ public Dashboard() {
         crudProdukPanel.add(StokLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, -1));
 
         txNamaSupplier.setEditable(false);
-        txNamaSupplier.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        txNamaSupplier.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txNamaSupplier.setDisabledTextColor(new java.awt.Color(64, 64, 122));
         txNamaSupplier.setEnabled(false);
         txNamaSupplier.addActionListener(new java.awt.event.ActionListener() {
@@ -4039,7 +4043,7 @@ public Dashboard() {
         cetakDataKeuangan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cetakDataKeuangan.setForeground(new java.awt.Color(64, 64, 122));
         cetakDataKeuangan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/icon/printer.png"))); // NOI18N
-        cetakDataKeuangan.setText("CETAK SELURUH LAPORAN KEUANGAN");
+        cetakDataKeuangan.setText("CETAK DATA KEUANGAN TERBARU");
         cetakDataKeuangan.setIconTextGap(8);
         cetakDataKeuangan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
