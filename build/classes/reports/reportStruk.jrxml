@@ -193,7 +193,7 @@
 		<band height="23" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="56" splitType="Stretch">
+		<band height="60" splitType="Stretch">
 			<staticText>
 				<reportElement x="147" y="27" width="33" height="7"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -243,18 +243,25 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="23" y="15" width="36" height="9"/>
+				<reportElement x="23" y="8" width="36" height="9"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font size="5" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hormat Kami]]></text>
 			</staticText>
 			<line>
-				<reportElement x="6" y="51" width="71" height="1"/>
+				<reportElement x="6" y="44" width="71" height="1"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<textField>
+				<reportElement x="11" y="50" width="61" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="5" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

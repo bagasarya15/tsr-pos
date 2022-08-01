@@ -3,8 +3,9 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="userLog" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT produk.kode_barang, produk.nama_barang, produk.kategori, produk.harga_beli, produk.harga_jual, produk.stok, supplier.nama_supplier, logo.image FROM supplier JOIN produk ON produk.id_supplier = supplier.id_supplier, logo WHERE logo.id_logo = 1 ORDER BY kode_barang ASC;]]>
+		<![CDATA[SELECT produk.kode_barang, produk.nama_barang, produk.kategori, produk.harga_beli, produk.harga_jual, produk.stok, supplier.nama_supplier, logo.image, users.name FROM supplier JOIN users JOIN produk ON produk.id_supplier = supplier.id_supplier, logo WHERE logo.id_logo = 1 AND users.name = $P{userLog}  ORDER BY kode_barang ASC ;]]>
 	</queryString>
 	<field name="kode_barang" class="java.lang.String"/>
 	<field name="nama_barang" class="java.lang.String"/>
@@ -14,6 +15,7 @@
 	<field name="stok" class="java.lang.Integer"/>
 	<field name="nama_supplier" class="java.lang.String"/>
 	<field name="image" class="java.io.InputStream"/>
+	<field name="name" class="java.lang.String"/>
 	<variable name="stok_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{stok}]]></variableExpression>
 	</variable>
@@ -236,6 +238,13 @@
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="575" y="174" width="191" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userLog}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

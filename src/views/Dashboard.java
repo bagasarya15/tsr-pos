@@ -165,7 +165,6 @@ public Dashboard() {
                 Statement stmt = conn.createStatement();
                 ResultSet res  = stmt.executeQuery(querys[i]);
                 if (res.next()){
-//                    labels[i].setText(res.getString("data"));
                 labels[i].setText(DF.format(res.getInt("data")));
                 }
             }catch (SQLException e){
@@ -344,7 +343,7 @@ public Dashboard() {
         String cariSupplier = txtcariSupplier.getText();
         try {
             int no = 1;
-            String sql = "SELECT * FROM supplier WHERE nama_supplier LIKE'%"+cariSupplier+"%'";
+            String sql = "SELECT * FROM supplier WHERE nama_supplier LIKE'%"+cariSupplier+"%'" ;
             Connection conn = (Connection)Koneksi.getKoneksi();
             Statement stm = conn.createStatement();
             ResultSet rs  = stm.executeQuery(sql);
@@ -360,10 +359,38 @@ public Dashboard() {
                 });
             }
             tabelSupplier.setModel(tblSupplier);
+            tabelLapSupplier.setModel(tblSupplier);
         }catch (SQLException e){
            JOptionPane.showMessageDialog(null, "Koneksi Database Gagal" + e.getMessage());
         } 
     } 
+    
+//     private void cetakDataSupplier(){
+//        try {       
+//            Connection conn = (Connection)Koneksi.getKoneksi();
+//            String report = "/reports/reportSupplier.jasper";
+//            InputStream path = getClass().getResourceAsStream(report);
+//            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), conn);
+//            JasperViewer.viewReport(JPrint, false);
+//        } catch (JRException ex) {
+//            JOptionPane.showMessageDialog(null, "Gagal Cetak Data Supplier" + ex);
+//        }
+//    }
+    private void cetakDataSupplier() {
+        String userLogin = String.valueOf(nameLog.getText());
+        try {      
+            Connection conn = (Connection)Koneksi.getKoneksi();
+            String report = "/reports/reportSupplier.jasper";
+            InputStream path = getClass().getResourceAsStream(report);
+            HashMap hash = new HashMap();
+            hash.put("userLog", userLogin);
+            JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
+            JasperViewer.viewReport(JPrint, false);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Gagal Cetak Laporan Keuangan" + ex);
+        }
+    }
+    
     //End Menu Supplier
     
      //Function Menu Transaksi Penjualan
@@ -815,12 +842,16 @@ public Dashboard() {
     }
     
       private void cetakDataProduk(){
+        String userLogin = String.valueOf(nameLog.getText());
         try {      
             Connection conn = (Connection)Koneksi.getKoneksi();
             String report = "/reports/reportInventory.jasper";
             InputStream path = getClass().getResourceAsStream(report);
-            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), conn);
+            HashMap hash = new HashMap();
+            hash.put("userLog", userLogin);
+            JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
             JasperViewer.viewReport(JPrint, false);
+            
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Data Produk" + ex);
         }
@@ -864,11 +895,14 @@ public Dashboard() {
     }
     
     private void cetakLaporanPengeluaran() {
+        String userLogin = String.valueOf(nameLog.getText());
         try {     
             Connection conn = (Connection)Koneksi.getKoneksi();
             String report = "/reports/reportPengeluaran.jasper";
             InputStream path = getClass().getResourceAsStream(report);
-            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), conn);
+            HashMap hash = new HashMap();
+            hash.put("userLog", userLogin);
+            JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
             JasperViewer.viewReport(JPrint, false);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Laporan Pengeluaran" + ex);
@@ -876,6 +910,7 @@ public Dashboard() {
     }
     
     private void cetakPengeluaranByMonthYear() {
+        String userLogin = String.valueOf(nameLog.getText());
         String bulan = String.valueOf(JcBulanPengeluaran.getSelectedIndex());
         String tahun = String.valueOf(JcTahunPengeluaran.getYear());
         try {      
@@ -883,6 +918,7 @@ public Dashboard() {
             String report = "/reports/reportPengeluaranByMonthYear.jasper";
             InputStream path = getClass().getResourceAsStream(report);
             HashMap hash = new HashMap();
+            hash.put("userLog", userLogin);
             hash.put("pengeluaranByMonth", bulan);
             hash.put("pengeluaranByYear", tahun);
             JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
@@ -963,6 +999,7 @@ public Dashboard() {
     private void cetakPenjualanByMonthYear() {
         String bulan = String.valueOf(JcBulanPenjualan.getSelectedIndex());
         String tahun = String.valueOf(JcTahunPenjualan.getYear());
+        String userLogin = String.valueOf(nameLog.getText());
         try {      
             Connection conn = (Connection)Koneksi.getKoneksi();
             String report = "/reports/reportPenjualanByMonthYear.jasper";
@@ -970,6 +1007,7 @@ public Dashboard() {
             HashMap hash = new HashMap();
             hash.put("ByMonth", bulan);
             hash.put("ByYear", tahun);
+            hash.put("userLog", userLogin);
             JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
             JasperViewer.viewReport(JPrint, false);
         } catch (JRException ex) {
@@ -978,11 +1016,14 @@ public Dashboard() {
     }
     
     private void cetakDataPenjualan(){
+        String userLogin = String.valueOf(nameLog.getText());
         try {       
             Connection conn = (Connection)Koneksi.getKoneksi();
             String report = "/reports/reportPenjualan.jasper";
             InputStream path = getClass().getResourceAsStream(report);
-            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), conn);
+            HashMap hash = new HashMap();
+            hash.put("userLog", userLogin);
+            JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
             JasperViewer.viewReport(JPrint, false);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Data Penjualan" + ex);
@@ -1093,11 +1134,14 @@ public Dashboard() {
     }
     
     private void cetakLaporanKeuangan() {
+        String userLogin = String.valueOf(nameLog.getText());
         try {     
             Connection conn = (Connection)Koneksi.getKoneksi();
             String report = "/reports/reportKeuangan.jasper";
             InputStream path = getClass().getResourceAsStream(report);
-            JasperPrint JPrint = JasperFillManager.fillReport(path, new HashMap(), conn);
+            HashMap hash = new HashMap();
+            hash.put("userLog", userLogin);
+            JasperPrint JPrint = JasperFillManager.fillReport(path, hash, conn);
             JasperViewer.viewReport(JPrint, false);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Gagal Cetak Laporan Keuangan" + ex);
@@ -1105,12 +1149,14 @@ public Dashboard() {
     }
     
     private void cetakKeuanganByMonthYear() {
+        String userLogin = String.valueOf(nameLog.getText());
         try {      
             Connection conn = (Connection)Koneksi.getKoneksi();
             String report = "/reports/reportKeuanganByMonthYear.jasper";
             InputStream path = getClass().getResourceAsStream(report);
             HashMap hash = new HashMap();
             hash.put("byMonth", txtCariKeuangan.getText());
+            hash.put("userLog", userLogin);
             JasperPrint JPrint = JasperFillManager.fillReport(path , hash, conn);
             JasperViewer.viewReport(JPrint, false);
         } catch (JRException ex) {
@@ -1378,6 +1424,10 @@ public Dashboard() {
         labelNamaKelola = new javax.swing.JLabel();
         txtidUser = new javax.swing.JTextField();
         labelCbUser = new javax.swing.JLabel();
+        lapSupplierPanel = new javax.swing.JPanel();
+        JPtabelInventory2 = new javax.swing.JScrollPane();
+        tabelLapSupplier = new javax.swing.JTable();
+        cetakDataKeuangan1 = new javax.swing.JButton();
         lapKeuanganPanel = new javax.swing.JPanel();
         JPtabelInventory1 = new javax.swing.JScrollPane();
         tabelKeuangan = new javax.swing.JTable();
@@ -1454,14 +1504,14 @@ public Dashboard() {
         sidebar.add(produkMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 190, -1));
 
         separatorMenuUtama1.setForeground(new java.awt.Color(255, 255, 255));
-        sidebar.add(separatorMenuUtama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 460, 120, 10));
+        sidebar.add(separatorMenuUtama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 490, 120, 10));
 
         PengaturanLabel.setBackground(new java.awt.Color(255, 255, 255));
         PengaturanLabel.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         PengaturanLabel.setForeground(new java.awt.Color(255, 255, 255));
         PengaturanLabel.setText("Pengaturan");
         PengaturanLabel.setToolTipText("");
-        sidebar.add(PengaturanLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 80, -1));
+        sidebar.add(PengaturanLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, 80, -1));
 
         Logo.setBackground(new java.awt.Color(64, 64, 122));
         Logo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
@@ -1489,7 +1539,7 @@ public Dashboard() {
                 lapKeuanganMenuActionPerformed(evt);
             }
         });
-        sidebar.add(lapKeuanganMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 190, -1));
+        sidebar.add(lapKeuanganMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 190, -1));
 
         lapPenjualanMenu.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lapPenjualanMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/icon/lapPenjualan.png"))); // NOI18N
@@ -1504,7 +1554,7 @@ public Dashboard() {
                 lapPenjualanMenuActionPerformed(evt);
             }
         });
-        sidebar.add(lapPenjualanMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 190, -1));
+        sidebar.add(lapPenjualanMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 190, -1));
 
         PengaturanLabel1.setBackground(new java.awt.Color(255, 255, 255));
         PengaturanLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -1596,7 +1646,7 @@ public Dashboard() {
                 lapPengeluaranMenuActionPerformed(evt);
             }
         });
-        sidebar.add(lapPengeluaranMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 190, -1));
+        sidebar.add(lapPengeluaranMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 190, -1));
 
         lapProdukMenu.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         lapProdukMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/icon/lapProduk.png"))); // NOI18N
@@ -1611,7 +1661,7 @@ public Dashboard() {
                 lapProdukMenuActionPerformed(evt);
             }
         });
-        sidebar.add(lapProdukMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 190, -1));
+        sidebar.add(lapProdukMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 190, -1));
 
         kelolaAkunMenu.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         kelolaAkunMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/icon/userSet.png"))); // NOI18N
@@ -1626,7 +1676,22 @@ public Dashboard() {
                 kelolaAkunMenuActionPerformed(evt);
             }
         });
-        sidebar.add(kelolaAkunMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 190, -1));
+        sidebar.add(kelolaAkunMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, 190, -1));
+
+        lapSupplierMenu.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        lapSupplierMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/icon/inventory.png"))); // NOI18N
+        lapSupplierMenu.setText("Laporan Supplier");
+        lapSupplierMenu.setFocusPainted(false);
+        lapSupplierMenu.setFocusable(false);
+        lapSupplierMenu.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lapSupplierMenu.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        lapSupplierMenu.setIconTextGap(25);
+        lapSupplierMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lapSupplierMenuActionPerformed(evt);
+            }
+        });
+        sidebar.add(lapSupplierMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 190, -1));
 
         body.add(sidebar);
 
@@ -4003,6 +4068,57 @@ public Dashboard() {
 
         mainPanel.add(kelolaAkunPanel, "card4");
 
+        lapSupplierPanel.setBackground(new java.awt.Color(222, 222, 229));
+        lapSupplierPanel.setMaximumSize(new java.awt.Dimension(974, 569));
+        lapSupplierPanel.setMinimumSize(new java.awt.Dimension(974, 569));
+        lapSupplierPanel.setPreferredSize(new java.awt.Dimension(974, 569));
+        lapSupplierPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tabelLapSupplier.setBackground(new java.awt.Color(244, 244, 250));
+        tabelLapSupplier.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tabelLapSupplier.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No", "Kode Supplier", "Nama Supplier", "Alamat Supplier", "Tlp Supplier", "Desrkripsi"
+            }
+        ));
+        tabelLapSupplier.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tabelLapSupplier.setGridColor(new java.awt.Color(222, 222, 229));
+        tabelLapSupplier.setName("dashboard"); // NOI18N
+        tabelLapSupplier.setOpaque(false);
+        tabelLapSupplier.setRequestFocusEnabled(false);
+        tabelLapSupplier.setRowHeight(25);
+        tabelLapSupplier.setSelectionBackground(new java.awt.Color(64, 64, 122));
+        tabelLapSupplier.setSelectionForeground(new java.awt.Color(245, 245, 250));
+        tabelLapSupplier.setShowVerticalLines(false);
+        tabelLapSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelLapSupplierMouseClicked(evt);
+            }
+        });
+        JPtabelInventory2.setViewportView(tabelLapSupplier);
+        if (tabelLapSupplier.getColumnModel().getColumnCount() > 0) {
+            tabelLapSupplier.getColumnModel().getColumn(1).setResizable(false);
+        }
+
+        lapSupplierPanel.add(JPtabelInventory2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 710, 320));
+
+        cetakDataKeuangan1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cetakDataKeuangan1.setForeground(new java.awt.Color(64, 64, 122));
+        cetakDataKeuangan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/icon/printer.png"))); // NOI18N
+        cetakDataKeuangan1.setText("CETAK DATA SUPPLIER");
+        cetakDataKeuangan1.setIconTextGap(8);
+        cetakDataKeuangan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cetakDataKeuangan1ActionPerformed(evt);
+            }
+        });
+        lapSupplierPanel.add(cetakDataKeuangan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 290, -1));
+
+        mainPanel.add(lapSupplierPanel, "card12");
+
         lapKeuanganPanel.setBackground(new java.awt.Color(222, 222, 229));
         lapKeuanganPanel.setMaximumSize(new java.awt.Dimension(974, 569));
         lapKeuanganPanel.setMinimumSize(new java.awt.Dimension(974, 569));
@@ -5073,7 +5189,6 @@ public Dashboard() {
             "Cetak Laporan Keuangan", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (confirmCetakKeuangan == JOptionPane.YES_OPTION){
             try {
-            
               String sql = "INSERT INTO laporan_keuangan (id_keuangan, tgl_dibuat, total_penjualan, "
                       +"beban_pengeluaran, laba_bersih) VALUES "
                       +"(default, CURDATE(), "
@@ -5152,6 +5267,31 @@ public Dashboard() {
         } 
     }//GEN-LAST:event_CetakPenjualanByMonthYearActionPerformed
 
+    private void lapSupplierMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapSupplierMenuActionPerformed
+//      Remove Panel
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        mainPanel.revalidate();
+//      Add Panel
+        mainPanel.add(lapSupplierPanel);
+        menuTitle.setText("Laporan | Laporan Supplier");  
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }//GEN-LAST:event_lapSupplierMenuActionPerformed
+
+    private void tabelLapSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelLapSupplierMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelLapSupplierMouseClicked
+
+    private void cetakDataKeuangan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetakDataKeuangan1ActionPerformed
+        int confirmCetakPenjualan = JOptionPane.showConfirmDialog(null, "Laporan Data Supplier Yang Dicetak Berdasarkan Data Yang Ada Saat Ini !",
+            "Cetak Data Supplier", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirmCetakPenjualan == JOptionPane.YES_OPTION){
+            cetakDataSupplier();
+            JOptionPane.showMessageDialog(null, "Laporan Supplier Berhasil Dicetak !");
+        } 
+    }//GEN-LAST:event_cetakDataKeuangan1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -5193,6 +5333,7 @@ public Dashboard() {
     private javax.swing.JButton CetakPenjualanByMonthYear;
     private javax.swing.JScrollPane JPtabelInventory;
     private javax.swing.JScrollPane JPtabelInventory1;
+    private javax.swing.JScrollPane JPtabelInventory2;
     private javax.swing.JComboBox<String> JcBulan;
     private javax.swing.JComboBox<String> JcBulanPengeluaran;
     private javax.swing.JComboBox<String> JcBulanPenjualan;
@@ -5259,6 +5400,7 @@ public Dashboard() {
     private javax.swing.JButton cetakDataByNoInvoice;
     private javax.swing.JButton cetakDataInventory;
     private javax.swing.JButton cetakDataKeuangan;
+    private javax.swing.JButton cetakDataKeuangan1;
     private javax.swing.JButton cetakDataPengeluaran;
     private javax.swing.JButton cetakDataeByNoInvoice1;
     private javax.swing.JPanel container;
@@ -5378,6 +5520,8 @@ public Dashboard() {
     public static final javax.swing.JButton lapPenjualanMenu = new javax.swing.JButton();
     private javax.swing.JPanel lapPenjualanPanel;
     public static final javax.swing.JButton lapProdukMenu = new javax.swing.JButton();
+    public static final javax.swing.JButton lapSupplierMenu = new javax.swing.JButton();
+    private javax.swing.JPanel lapSupplierPanel;
     private javax.swing.JLayeredPane mainPanel;
     private javax.swing.JLabel menuTitle;
     public static final javax.swing.JLabel nameLog = new javax.swing.JLabel();
@@ -5412,6 +5556,7 @@ public Dashboard() {
     private javax.swing.JScrollPane tabelKelolaAkunPanel;
     private static javax.swing.JTable tabelKeuangan;
     private static javax.swing.JTable tabelLapPenjualan;
+    private static javax.swing.JTable tabelLapSupplier;
     private static javax.swing.JTable tabelLaporanPengeluaran;
     private static javax.swing.JTable tabelPengeluaran;
     private javax.swing.JScrollPane tabelPengeluaranPanel;

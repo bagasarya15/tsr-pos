@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.771561000000001"/>
-	<property name="ireport.x" value="24"/>
-	<property name="ireport.y" value="99"/>
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="345"/>
+	<property name="ireport.y" value="63"/>
 	<parameter name="ByMonth" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ByYear" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="userLog" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT transaksi_detail.no_transaksi, customer.nama_customer, produk.kode_barang, produk.nama_barang, produk.harga_jual, transaksi_detail.jumlah_beli, transaksi_detail.total_harga, transaksi_detail.total_bayar, transaksi_detail.total_kembalian, transaksi_detail.tgl_transaksi, logo.image FROM customer JOIN transaksi_detail ON customer.id_customer = transaksi_detail.id_customer JOIN produk ON produk.id_produk = transaksi_detail.id_produk, logo WHERE MONTH(tgl_transaksi)=$P{ByMonth} AND YEAR(tgl_transaksi)=$P{ByYear} AND logo.id_logo = 1]]>
+		<![CDATA[SELECT transaksi_detail.no_transaksi, customer.nama_customer, produk.kode_barang, produk.nama_barang, produk.harga_jual, transaksi_detail.jumlah_beli, transaksi_detail.total_harga, transaksi_detail.total_bayar, transaksi_detail.total_kembalian, transaksi_detail.tgl_transaksi, logo.image, users.name FROM customer JOIN users JOIN transaksi_detail ON customer.id_customer = transaksi_detail.id_customer JOIN produk ON produk.id_produk = transaksi_detail.id_produk, logo WHERE MONTH(tgl_transaksi)=$P{ByMonth} AND YEAR(tgl_transaksi)=$P{ByYear} AND logo.id_logo = 1 AND users.name = $P{userLog}]]>
 	</queryString>
 	<field name="no_transaksi" class="java.lang.String"/>
 	<field name="nama_customer" class="java.lang.String"/>
@@ -23,6 +26,7 @@
 	<field name="total_kembalian" class="java.lang.Integer"/>
 	<field name="tgl_transaksi" class="java.sql.Timestamp"/>
 	<field name="image" class="java.io.InputStream"/>
+	<field name="name" class="java.lang.String"/>
 	<variable name="grandTotal" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_harga}]]></variableExpression>
 	</variable>
@@ -138,7 +142,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21">
+		<band height="19">
 			<textField>
 				<reportElement x="3" y="-1" width="80" height="20"/>
 				<textElement verticalAlignment="Middle">
@@ -205,7 +209,7 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="146">
+		<band height="143">
 			<staticText>
 				<reportElement x="16" y="8" width="123" height="20" forecolor="#000000" backcolor="#000000"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -242,11 +246,18 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="533" y="142" width="214" height="1"/>
+				<reportElement x="534" y="113" width="214" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="547" y="120" width="191" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userLog}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.3310000000000004"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="31"/>
+	<property name="ireport.x" value="104"/>
+	<property name="ireport.y" value="65"/>
 	<parameter name="pengeluaranByMonth" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
 	<parameter name="pengeluaranByYear" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="userLog" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT pengeluaran.no_pengeluaran, pengeluaran.jenis_pengeluaran, pengeluaran.keterangan, pengeluaran.jumlah, pengeluaran.total_pengeluaran, pengeluaran.tgl_pengeluaran, logo.image FROM pengeluaran JOIN logo WHERE logo.id_logo = 1 AND MONTH(tgl_pengeluaran)= $P{pengeluaranByMonth} AND YEAR(tgl_pengeluaran) = $P{pengeluaranByYear};]]>
+		<![CDATA[SELECT pengeluaran.no_pengeluaran, pengeluaran.jenis_pengeluaran, pengeluaran.keterangan, pengeluaran.jumlah, pengeluaran.total_pengeluaran, pengeluaran.tgl_pengeluaran, logo.image, users.name FROM pengeluaran JOIN users JOIN logo WHERE logo.id_logo = 1 AND MONTH(tgl_pengeluaran)= $P{pengeluaranByMonth} AND YEAR(tgl_pengeluaran) = $P{pengeluaranByYear} AND users.name = $P{userLog};]]>
 	</queryString>
 	<field name="no_pengeluaran" class="java.lang.String"/>
 	<field name="jenis_pengeluaran" class="java.lang.String"/>
@@ -19,6 +22,7 @@
 	<field name="total_pengeluaran" class="java.lang.Integer"/>
 	<field name="tgl_pengeluaran" class="java.sql.Date"/>
 	<field name="image" class="java.io.InputStream"/>
+	<field name="name" class="java.lang.String"/>
 	<variable name="sumTotalPengeluaran" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_pengeluaran}]]></variableExpression>
 	</variable>
@@ -214,6 +218,13 @@
 					<pen lineWidth="1.75" lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="596" y="159" width="191" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userLog}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

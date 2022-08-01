@@ -18,6 +18,7 @@ import static views.Dashboard.lapKeuanganMenu;
 import static views.Dashboard.lapPengeluaranMenu;
 import static views.Dashboard.lapPenjualanMenu;
 import static views.Dashboard.lapProdukMenu;
+import static views.Dashboard.lapSupplierMenu;
 import static views.Dashboard.produkMenu;
 import static views.Dashboard.pengeluaranMenu;
 import static views.Dashboard.supplierMenu;
@@ -274,6 +275,7 @@ public class Login extends javax.swing.JFrame {
                     lapPenjualanMenu.setEnabled(true);
                     kelolaAkunMenu.setEnabled(true);
                     lapKeuanganMenu.setEnabled(true);
+                    lapSupplierMenu.setEnabled(true);
                     txtuser.setText("");
                     txtpass.setText("");
                     cbuser.setSelectedItem("Admin");
@@ -290,6 +292,7 @@ public class Login extends javax.swing.JFrame {
                     lapPenjualanMenu.setEnabled(false);
                     kelolaAkunMenu.setEnabled(false);
                     lapKeuanganMenu.setEnabled(false);
+                    lapSupplierMenu.setEnabled(false);
                     txtuser.setText("");
                     txtpass.setText("");
                     cbuser.setSelectedItem("Kasir");

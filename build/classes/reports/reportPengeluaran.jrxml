@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="2.1435888100000025"/>
-	<property name="ireport.x" value="731"/>
-	<property name="ireport.y" value="274"/>
+	<property name="ireport.zoom" value="1.6105100000000017"/>
+	<property name="ireport.x" value="345"/>
+	<property name="ireport.y" value="39"/>
+	<parameter name="userLog" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT pengeluaran.no_pengeluaran, pengeluaran.jenis_pengeluaran, pengeluaran.keterangan, pengeluaran.jumlah, pengeluaran.total_pengeluaran, pengeluaran.tgl_pengeluaran, logo.image FROM pengeluaran JOIN logo WHERE logo.id_logo = 1;]]>
+		<![CDATA[SELECT pengeluaran.no_pengeluaran, pengeluaran.jenis_pengeluaran, pengeluaran.keterangan, pengeluaran.jumlah, pengeluaran.total_pengeluaran, pengeluaran.tgl_pengeluaran, logo.image, users.name FROM pengeluaran JOIN users JOIN logo WHERE logo.id_logo = 1 AND users.name = $P{userLog};]]>
 	</queryString>
 	<field name="no_pengeluaran" class="java.lang.String"/>
 	<field name="jenis_pengeluaran" class="java.lang.String"/>
@@ -13,6 +16,7 @@
 	<field name="total_pengeluaran" class="java.lang.Integer"/>
 	<field name="tgl_pengeluaran" class="java.sql.Date"/>
 	<field name="image" class="java.io.InputStream"/>
+	<field name="name" class="java.lang.String"/>
 	<variable name="sumTotalPengeluaran" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_pengeluaran}]]></variableExpression>
 	</variable>
@@ -52,57 +56,57 @@
 		</band>
 	</title>
 	<columnHeader>
-		<band height="34" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<staticText>
-				<reportElement x="16" y="7" width="133" height="20"/>
+				<reportElement x="16" y="3" width="133" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NO PENGELUARAN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="432" y="8" width="60" height="20"/>
+				<reportElement x="432" y="4" width="60" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JUMLAH]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="518" y="8" width="133" height="20"/>
+				<reportElement x="518" y="4" width="133" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL PENGELUARAN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="671" y="8" width="116" height="20"/>
+				<reportElement x="671" y="4" width="116" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TGL-PENGELUARAN]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="3" width="802" height="1"/>
+				<reportElement x="0" y="1" width="802" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.75" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="167" y="7" width="133" height="20"/>
+				<reportElement x="167" y="3" width="133" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JENIS PENGELUARAN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="310" y="7" width="81" height="20"/>
+				<reportElement x="310" y="3" width="81" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[KETERANGAN]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="32" width="802" height="1"/>
+				<reportElement x="0" y="24" width="802" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.75" lineStyle="Double"/>
 				</graphicElement>
@@ -162,7 +166,7 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="136">
+		<band height="124">
 			<staticText>
 				<reportElement x="15" y="5" width="129" height="20" forecolor="#000000" backcolor="#000000"/>
 				<textElement verticalAlignment="Middle">
@@ -178,14 +182,14 @@
 				<textFieldExpression><![CDATA[$V{sumTotalPengeluaran}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="560" y="41" width="191" height="20"/>
+				<reportElement x="564" y="31" width="191" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Depok, " + new SimpleDateFormat("EEEE dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="609" y="127" width="157" height="1"/>
+				<reportElement x="609" y="98" width="157" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -202,6 +206,13 @@
 					<pen lineWidth="1.75" lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="584" y="103" width="191" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userLog}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
