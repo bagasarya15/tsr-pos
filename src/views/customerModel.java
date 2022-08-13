@@ -16,7 +16,7 @@ import static views.Dashboard.txIdCustomer;
 import static views.Dashboard.txNamaCustomer;
 /**
  *
- * @author Bagas Arya
+ * @author Bagas Arya Pradipta | 201843500707
  */
 public class customerModel extends javax.swing.JFrame {
 

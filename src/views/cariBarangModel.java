@@ -22,7 +22,7 @@ import static views.Dashboard.trTotal;
 
 /**
  *
- * @author Bagas Arya
+ * @author Bagas Arya Pradipta | 201843500707
  */
 public class cariBarangModel extends javax.swing.JFrame {
     

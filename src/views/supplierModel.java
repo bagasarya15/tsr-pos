@@ -19,7 +19,7 @@ import static views.Dashboard.txtIdSupplier;
 
 /**
  *
- * @author Bagas Arya
+ * @author Bagas Arya Pradipta | 201843500707
  */
 public class supplierModel extends javax.swing.JFrame {
 
